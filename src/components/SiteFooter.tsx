@@ -7,7 +7,7 @@ export function SiteFooter({
   contactInfo,
 }: {
   siteTitle?: string
-  contactInfo?: Array<{ text?: string; link?: string }>
+  contactInfo?: Array<{ _key?: string; text?: string; link?: string }>
 }) {
   return (
     <footer className="mt-auto border-t border-black/5 bg-[var(--color-footer)] text-[var(--color-snow)]">
@@ -18,8 +18,8 @@ export function SiteFooter({
           </p>
           {contactInfo?.length ? (
             <ul className="mt-4 space-y-2 text-sm text-[var(--color-cream)]">
-              {contactInfo.map((item) => (
-                <li key={item.link ?? item.text}>
+              {contactInfo.map((item, index) => (
+                <li key={item._key ?? `${item.link ?? ''}-${item.text ?? ''}-${index}`}>
                   {item.link ? (
                     <a href={item.link} className="underline underline-offset-4">
                       {item.text}
