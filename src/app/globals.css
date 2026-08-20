@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --color-white: #ffffff;
+  --color-charcoal: #1a1a1a;
+  --color-cream: #f4f4f4;
+  --color-footer: #262626;
+  --color-forest: #141414;
+  --color-sage: #9a9a9a;
+  --color-snow: #fafafa;
+  --color-taupe: #5c5c5c;
+}
+
+@theme inline {
+  --font-sans: var(--font-montserrat), 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: var(--font-playfair), 'Bodoni 72', 'Didot', Georgia, serif;
+}
+
+body {
+  background: var(--color-snow);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .heading-display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .nav-link {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  .nav-brand {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .nav-brand {
+      font-size: 0.875rem;
+    }
+  }
+
+  .text-link {
+    font-size: 1.0625rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .text-link {
+      font-size: 1.125rem;
+    }
+  }
+
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    transition: opacity 0.2s ease;
+  }
+
+  @media (min-width: 768px) {
+    .btn-pill {
+      padding: 1.125rem 2.25rem;
+      font-size: 1.0625rem;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.0625rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.75;
+    color: var(--color-white);
+  }
+}
