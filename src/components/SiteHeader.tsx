@@ -43,8 +43,8 @@ export function SiteHeader({
     }
 
     return isActive
-      ? 'text-[var(--color-charcoal)] underline underline-offset-[6px]'
-      : 'text-[var(--color-taupe)] hover:text-[var(--color-charcoal)]'
+      ? 'text-[var(--color-charcoal)] underline underline-offset-[6px] max-lg:text-white'
+      : 'text-[var(--color-taupe)] hover:text-[var(--color-charcoal)] max-lg:text-white/90 max-lg:hover:text-white'
   }
 
   return (
@@ -52,7 +52,7 @@ export function SiteHeader({
       className={`z-50 transition-colors duration-300 ${
         isOverlay
           ? 'absolute inset-x-0 top-0 bg-transparent'
-          : 'sticky top-0 border-b border-black/5 bg-[var(--color-snow)]/95 backdrop-blur-md'
+          : 'absolute inset-x-0 top-0 bg-transparent lg:sticky lg:top-0 lg:border-b lg:border-black/5 lg:bg-[var(--color-snow)]/95 lg:backdrop-blur-md'
       }`}
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-8 py-8 lg:flex-row lg:items-start lg:justify-between lg:px-12 lg:py-10">
@@ -73,7 +73,7 @@ export function SiteHeader({
         <div className="flex flex-col items-start gap-6 lg:items-end">
           <Link
             href="/"
-            className={`nav-brand transition ${
+            className={`nav-brand hidden transition lg:inline ${
               isOverlay ? 'text-white' : 'text-[var(--color-charcoal)]'
             }`}
           >
@@ -82,7 +82,9 @@ export function SiteHeader({
           <Link
             href={contactFormHref}
             className={`text-link w-fit transition ${
-              isOverlay ? 'text-white hover:text-white/80' : 'text-[var(--color-charcoal)] hover:opacity-70'
+              isOverlay
+                ? 'text-white hover:text-white/80'
+                : 'text-[var(--color-charcoal)] hover:opacity-70 max-lg:text-white max-lg:hover:text-white/80'
             }`}
           >
             Erstgespräch vereinbaren
