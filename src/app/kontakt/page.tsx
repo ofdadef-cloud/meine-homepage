@@ -21,6 +21,7 @@ export default async function KontaktPage({ searchParams }: KontaktPageProps) {
   const { anliegen } = await searchParams
   const defaultSubject =
     anliegen === 'erstgespraech' ? 'Erstgespräch vereinbaren' : undefined
+  const contactFormEnabled = process.env.NEXT_PUBLIC_CONTACT_FORM_ENABLED !== 'false'
   const [settings, navItems] = await Promise.all([fetchSettings(), fetchNavItems()])
   let page: PageData | null = null
 
@@ -38,15 +39,35 @@ export default async function KontaktPage({ searchParams }: KontaktPageProps) {
         className="scroll-mt-28 border-t border-black/5 bg-[var(--color-cream)] px-6 py-20"
       >
         <div className="mx-auto max-w-3xl rounded-3xl bg-white p-8 shadow-sm">
-          <h2 className="font-display text-2xl text-[var(--color-charcoal)]">
-            Nachricht senden
-          </h2>
-          <p className="mt-3 text-[var(--color-taupe)]">
-            Alternativ zum E-Mail-Link können Sie uns hier direkt schreiben.
-          </p>
-          <div className="mt-8">
-            <ContactForm defaultSubject={defaultSubject} />
-          </div>
+          {contactFormEnabled ? (
+            <>
+              <h2 className="font-display text-2xl text-[var(--color-charcoal)]">
+                Nachricht senden
+              </h2>
+              <p className="mt-3 text-[var(--color-taupe)]">
+                Alternativ zum E-Mail-Link können Sie uns hier direkt schreiben.
+              </p>
+              <div className="mt-8">
+                <ContactForm defaultSubject={defaultSubject} />
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="font-display text-2xl text-[var(--color-charcoal)]">
+                Kontakt per E-Mail
+              </h2>
+              <p className="mt-3 leading-7 text-[var(--color-taupe)]">
+                Das Kontaktformular ist vorübergehend nicht verfügbar. Schreiben Sie mir gerne
+                direkt eine E-Mail.
+              </p>
+              <a
+                href="mailto:aldohaumann@gmail.com"
+                className="btn-pill mt-8 bg-[#111111] text-white hover:bg-[#333333]"
+              >
+                E-Mail schreiben
+              </a>
+            </>
+          )}
         </div>
       </section>
     </PageRenderer>

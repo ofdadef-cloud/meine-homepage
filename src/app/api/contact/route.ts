@@ -7,6 +7,13 @@ import {
 } from '@/lib/contact'
 
 export async function POST(request: Request) {
+  if (process.env.NEXT_PUBLIC_CONTACT_FORM_ENABLED === 'false') {
+    return NextResponse.json(
+      { error: 'Das Kontaktformular ist vorübergehend nicht verfügbar.' },
+      { status: 503 },
+    )
+  }
+
   try {
     const payload = (await request.json()) as Record<string, string>
     const validation = validateContactPayload(payload)
