@@ -125,5 +125,28 @@ export async function sendContactEmail(payload: {
     return { ok: false as const, error: 'E-Mail konnte nicht gesendet werden.' }
   }
 
-  return { ok: true as const }
+  const confirmationResponse = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${resendKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from,
+      to: [payload.email],
+      reply_to: to,
+      subject: 'Ihre Nachricht ist bei Aldo Haumann eingegangen',
+      text: [
+        `Hallo ${payload.name},`,
+        '',
+        'vielen Dank für Ihre Nachricht. Sie ist gut bei mir angekommen.',
+        'Ich melde mich so bald wie möglich bei Ihnen zurück.',
+        '',
+        'Herzliche Grüße',
+        'Aldo Haumann',
+      ].join('\n'),
+    }),
+  })
+
+  return { ok: true as const, confirmationSent: confirmationResponse.ok }
 }

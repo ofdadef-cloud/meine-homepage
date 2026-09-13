@@ -42,6 +42,10 @@ export async function POST(request: Request) {
       )
     }
 
+    if (!email.confirmationSent) {
+      console.warn('[contact] Die Empfangsbestätigung konnte nicht gesendet werden.')
+    }
+
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json(
