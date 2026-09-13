@@ -194,7 +194,7 @@ export function ContactForm({ defaultSubject }: { defaultSubject?: string }) {
       <button
         type="submit"
         disabled={formState === 'submitting' || !siteKey || !hasFunctionalConsent}
-        className="inline-flex rounded-full bg-[var(--color-forest)] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex rounded-full bg-[#111111] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {formState === 'submitting' ? 'Wird gesendet…' : 'Nachricht senden'}
       </button>
