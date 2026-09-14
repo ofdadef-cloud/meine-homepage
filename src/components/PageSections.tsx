@@ -96,8 +96,10 @@ function TextImageSection({
   const imageDisplay = localizedString(block, 'imageDisplay', locale) ?? 'standard'
   const imageFit = localizedString(block, 'imageFit', locale) ?? 'cover'
   const theme = localizedString(block, 'theme', locale) ?? 'light'
+  const textPosition = localizedString(block, 'textPosition', locale)
   const imageLeft = layout === 'textRight'
   const isDark = theme === 'dark'
+  const alignTop = textPosition === 'top'
   const headingUrl = relocatedCta?.url ?? ctaUrl
 
   return (
@@ -106,7 +108,11 @@ function TextImageSection({
         isDark ? 'bg-[var(--color-footer)] text-white' : 'bg-[var(--color-snow)]'
       }`}
     >
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-12 md:items-center">
+      <div
+        className={`mx-auto grid max-w-6xl gap-10 md:grid-cols-12 ${
+          alignTop ? 'md:items-start' : 'md:items-center'
+        }`}
+      >
         <div className={`md:col-span-5 ${imageLeft ? 'md:order-2' : ''}`}>
           {heading ? (
             headingUrl ? (
