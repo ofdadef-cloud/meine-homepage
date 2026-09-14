@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type Quote = {
   _key?: string
@@ -18,8 +18,17 @@ export function RotatingQuotesSection({
   interval?: number
 }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
   const safeInterval = Math.min(Math.max(interval ?? 8, 3), 30) * 1000
   const activeQuote = quotes[activeIndex % quotes.length]
+
+  const showPreviousQuote = () => {
+    setActiveIndex((currentIndex) => (currentIndex - 1 + quotes.length) % quotes.length)
+  }
+
+  const showNextQuote = () => {
+    setActiveIndex((currentIndex) => (currentIndex + 1) % quotes.length)
+  }
 
   useEffect(() => {
     if (quotes.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -41,7 +50,36 @@ export function RotatingQuotesSection({
     <section className="bg-[var(--color-cream)] px-6 py-20 text-[var(--color-charcoal)] md:py-28">
       <div className="mx-auto max-w-5xl text-center">
         {heading ? <h2 className="font-display text-4xl md:text-5xl">{heading}</h2> : null}
-        <figure className="mt-10 min-h-60 content-center md:mt-14">
+        <figure
+          className="mt-10 min-h-60 touch-pan-y content-center md:mt-14"
+          onTouchStart={(event) => {
+            const touch = event.changedTouches[0]
+            touchStart.current = { x: touch.clientX, y: touch.clientY }
+          }}
+          onTouchEnd={(event) => {
+            const start = touchStart.current
+            const touch = event.changedTouches[0]
+
+            touchStart.current = null
+
+            if (!start || quotes.length < 2) {
+              return
+            }
+
+            const horizontalDistance = touch.clientX - start.x
+            const verticalDistance = touch.clientY - start.y
+
+            if (Math.abs(horizontalDistance) < 50 || Math.abs(horizontalDistance) < Math.abs(verticalDistance)) {
+              return
+            }
+
+            if (horizontalDistance > 0) {
+              showPreviousQuote()
+            } else {
+              showNextQuote()
+            }
+          }}
+        >
           <blockquote
             aria-live="off"
             className="mx-auto max-w-3xl text-[clamp(1.35rem,2.5vw,2.25rem)] leading-[1.45] font-medium"

@@ -64,7 +64,7 @@ function HeroSection({
 
       <div className="relative mx-auto flex min-h-screen max-w-[1400px] flex-col justify-end px-8 pb-16 pt-40 lg:px-12 lg:pb-20 lg:pt-44">
         <div className="max-w-4xl">
-          <h1 className="heading-display text-[clamp(3.5rem,11vw,7.5rem)] leading-[0.92] text-white">
+          <h1 className="heading-display text-[clamp(4.5rem,13vw,10rem)] leading-[0.92] text-white">
             {textLeft}
           </h1>
           {textRight ? <p className="hero-subtitle mt-6 max-w-xl md:mt-8">{textRight}</p> : null}
