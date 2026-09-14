@@ -44,7 +44,6 @@ function LightbulbIcon({
   onMouseLeave,
   ariaExpanded,
   buttonId,
-  panelId,
   image,
 }: {
   label: string
@@ -56,7 +55,6 @@ function LightbulbIcon({
   onMouseLeave: () => void
   ariaExpanded: boolean
   buttonId: string
-  panelId: string
   image?: { asset?: { _ref?: string } }
 }) {
   const glow = isHovered || isActive
@@ -72,7 +70,6 @@ function LightbulbIcon({
         id={buttonId}
         aria-label={label}
         aria-expanded={ariaExpanded}
-        aria-controls={panelId}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -108,7 +105,6 @@ function LightbulbIcon({
       type="button"
       id={buttonId}
       aria-expanded={ariaExpanded}
-      aria-controls={panelId}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -356,12 +352,12 @@ export function LightbulbValuesSection({
             const isActive = openKey === item._key
             const isHovered = hoveredKey === item._key
             const buttonId = `${sectionId}-bulb-${item._key}`
-            const panelId = `${sectionId}-panel-${item._key}`
+            const description = localizedBlocks(item, 'description', locale)
 
             return (
               <div
                 key={item._key}
-                className="flex flex-col items-center"
+                className="flex w-full flex-col items-center md:w-auto"
                 style={{
                   marginBottom: `${offset}px`,
                   zIndex: isHovered || isActive ? 20 : 10 - (index % 5),
@@ -373,20 +369,29 @@ export function LightbulbValuesSection({
                   isActive={isActive}
                   scale={scale}
                   buttonId={buttonId}
-                  panelId={panelId}
                   image={image}
                   ariaExpanded={isActive}
                   onClick={() => setOpenKey(isActive ? null : item._key)}
                   onMouseEnter={() => setHoveredKey(item._key)}
                   onMouseLeave={() => setHoveredKey(null)}
                 />
+                {isActive ? (
+                  <div className="mt-5 w-full max-w-xl overflow-hidden rounded-[1.75rem] border border-amber-100/15 bg-white/5 px-6 py-6 text-left backdrop-blur-sm md:hidden">
+                    <p className="text-sm font-medium uppercase tracking-[0.18em] text-amber-200/80">
+                      {label}
+                    </p>
+                    <div className="mt-4 text-base">
+                      <PortableTextContent value={description} variant="light" />
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )
           })}
         </div>
 
         <div
-          className={`mx-auto mt-10 max-w-3xl overflow-hidden rounded-[1.75rem] border border-amber-100/15 bg-white/5 backdrop-blur-sm transition-all duration-500 ${
+          className={`mx-auto mt-10 hidden max-w-3xl overflow-hidden rounded-[1.75rem] border border-amber-100/15 bg-white/5 backdrop-blur-sm transition-all duration-500 md:block ${
             activeItem ? 'max-h-[min(24rem,70vh)] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
