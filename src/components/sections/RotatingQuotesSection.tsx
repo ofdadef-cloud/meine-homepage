@@ -51,14 +51,12 @@ export function RotatingQuotesSection({
       <div className="mx-auto max-w-5xl text-center">
         {heading ? <h2 className="font-display text-4xl md:text-5xl">{heading}</h2> : null}
         <figure
-          className="mt-10 min-h-60 touch-pan-y content-center md:mt-14"
-          onTouchStart={(event) => {
-            const touch = event.changedTouches[0]
-            touchStart.current = { x: touch.clientX, y: touch.clientY }
+          className="mt-10 min-h-60 touch-pan-y cursor-grab content-center active:cursor-grabbing md:mt-14"
+          onPointerDown={(event) => {
+            touchStart.current = { x: event.clientX, y: event.clientY }
           }}
-          onTouchEnd={(event) => {
+          onPointerUp={(event) => {
             const start = touchStart.current
-            const touch = event.changedTouches[0]
 
             touchStart.current = null
 
@@ -66,8 +64,8 @@ export function RotatingQuotesSection({
               return
             }
 
-            const horizontalDistance = touch.clientX - start.x
-            const verticalDistance = touch.clientY - start.y
+            const horizontalDistance = event.clientX - start.x
+            const verticalDistance = event.clientY - start.y
 
             if (Math.abs(horizontalDistance) < 50 || Math.abs(horizontalDistance) < Math.abs(verticalDistance)) {
               return
@@ -95,21 +93,39 @@ export function RotatingQuotesSection({
           ) : null}
         </figure>
         {quotes.length > 1 ? (
-          <div className="mt-10 flex justify-center gap-3" aria-label="Zitat auswählen">
-            {quotes.map((quote, index) => (
-              <button
-                key={quote._key ?? index}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className={`h-2.5 rounded-full transition-all ${
-                  index === activeIndex % quotes.length
-                    ? 'w-8 bg-[var(--color-charcoal)]'
-                    : 'w-2.5 bg-[var(--color-sage)] hover:bg-[var(--color-taupe)]'
-                }`}
-                aria-label={`Zitat ${index + 1} anzeigen`}
-                aria-pressed={index === activeIndex % quotes.length}
-              />
-            ))}
+          <div className="mt-10 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={showPreviousQuote}
+              className="grid size-10 place-items-center rounded-full border border-[var(--color-taupe)] text-xl transition hover:bg-[var(--color-charcoal)] hover:text-white"
+              aria-label="Vorheriges Zitat anzeigen"
+            >
+              ←
+            </button>
+            <div className="flex gap-3" aria-label="Zitat auswählen">
+              {quotes.map((quote, index) => (
+                <button
+                  key={quote._key ?? index}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  className={`h-2.5 rounded-full transition-all ${
+                    index === activeIndex % quotes.length
+                      ? 'w-8 bg-[var(--color-charcoal)]'
+                      : 'w-2.5 bg-[var(--color-sage)] hover:bg-[var(--color-taupe)]'
+                  }`}
+                  aria-label={`Zitat ${index + 1} anzeigen`}
+                  aria-pressed={index === activeIndex % quotes.length}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={showNextQuote}
+              className="grid size-10 place-items-center rounded-full border border-[var(--color-taupe)] text-xl transition hover:bg-[var(--color-charcoal)] hover:text-white"
+              aria-label="Nächstes Zitat anzeigen"
+            >
+              →
+            </button>
           </div>
         ) : null}
       </div>
