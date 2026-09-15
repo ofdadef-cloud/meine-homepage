@@ -97,10 +97,19 @@ export function RotatingQuotesSection({
             <button
               type="button"
               onClick={showPreviousQuote}
-              className="grid size-10 place-items-center rounded-full border border-[var(--color-taupe)] text-xl transition hover:bg-[var(--color-charcoal)] hover:text-white"
+              className="group grid size-11 place-items-center rounded-full border border-[var(--color-taupe)]/60 text-[var(--color-charcoal)] shadow-sm transition duration-200 hover:scale-105 hover:border-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-charcoal)]"
               aria-label="Vorheriges Zitat anzeigen"
             >
-              ←
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="size-5 transition-transform duration-200 group-hover:-translate-x-0.5"
+              >
+                <path d="M19 12H5M11 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
             <div className="flex gap-3" aria-label="Zitat auswählen">
               {quotes.map((quote, index) => (
@@ -121,10 +130,19 @@ export function RotatingQuotesSection({
             <button
               type="button"
               onClick={showNextQuote}
-              className="grid size-10 place-items-center rounded-full border border-[var(--color-taupe)] text-xl transition hover:bg-[var(--color-charcoal)] hover:text-white"
+              className="group grid size-11 place-items-center rounded-full border border-[var(--color-taupe)]/60 text-[var(--color-charcoal)] shadow-sm transition duration-200 hover:scale-105 hover:border-[var(--color-charcoal)] hover:bg-[var(--color-charcoal)] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-charcoal)]"
               aria-label="Nächstes Zitat anzeigen"
             >
-              →
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="size-5 transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
         ) : null}
